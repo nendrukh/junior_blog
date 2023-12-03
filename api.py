@@ -1,18 +1,18 @@
 from googleapiclient.discovery import build
 from config import API_KEY
 
-youtube = build("youtube", "v3", developerKey=API_KEY)
-videos = {"oQY1VouspmM": "Очень полезное видео по всяким айтишным фишкам/лайфхакам",
-          "NEhB61CHDcM": "Крутой псевдо-собес, на котором задают неочевидные вопросы для джуна (но в целом база)"
-          }
 
-result = dict()
-for id_video, description in videos.items():
-    request = youtube.videos().list(part="snippet,contentDetails", id=id_video)
+def get_video_info(video_id: str, description: str) -> dict:
+    youtube = build("youtube", "v3", developerKey=API_KEY)
+
+    result = dict()
+    request = youtube.videos().list(part="snippet,contentDetails", id=video_id)
     response = request.execute()
 
-    url = "https://www.youtube.com/watch?v=" + id_video
-    result[url] = {"title": response["items"][0]["snippet"]["title"],
-                   "description": description,
-                   "channel_name": response["items"][0]["snippet"]["channelTitle"]
-                   }
+    url = "https://www.youtube.com/watch?v=" + video_id
+    result["url"] = url
+    result["title"] = response["items"][0]["snippet"]["title"]
+    result["description"] = description
+    result["channel_name"] = response["items"][0]["snippet"]["channelTitle"]
+
+    return result

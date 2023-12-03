@@ -18,11 +18,10 @@
     </nav>
     <h1>Добро пожаловать на сайт для джуниор Python разработчиков</h1>
     {% for video in videos %}
-        <a href="{{ video['url'] }}">
+        <a href="{{ url_for('video', video_id=video['id']) }}">
             <h2>{{ video['title'] }}</h2>
         </a>
         <p>{{ video['channel_name'] }}</p>
-        <span class="badge badge-primary">{{ video['description'] }}</span>
         <hr>
     {% endfor %}
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>

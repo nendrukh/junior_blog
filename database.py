@@ -1,5 +1,5 @@
 import sqlite3
-from api import result
+from api import get_video_info
 
 database = sqlite3.connect("database.db")
 
@@ -8,9 +8,14 @@ with open("schema.sql") as db:
 
 cursor = database.cursor()
 
-for url, value in result.items():
+videos = {"oQY1VouspmM": "Очень полезное видео по всяким айтишным фишкам/лайфхакам",
+          "NEhB61CHDcM": "Крутой псевдо-собес, на котором задают неочевидные вопросы для джуна (но в целом база)"}
+
+
+for video_id, description in videos.items():
+    result = get_video_info(video_id, description)
     cursor.execute("INSERT INTO videos (url, title, description, channel_name) VALUES (?, ?, ?, ?)",
-                   (url, value["title"], value["description"], value["channel_name"])
+                   (result["url"], result["title"], result["description"], result["channel_name"])
                    )
 
 database.commit()
