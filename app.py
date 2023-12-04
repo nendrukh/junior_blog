@@ -45,8 +45,8 @@ def video(video_id):
     return render_template("video.html", video=video)
 
 
-@app.route("/add", methods=("GET", "POST"))
-def add():
+@app.route("/add_video", methods=("GET", "POST"))
+def add_video():
     if request.method == "POST":
         video_id = request.form["video_id"]
         description = request.form["description"]
@@ -65,7 +65,7 @@ def add():
             connection.close()
             return redirect(url_for("home"))
 
-    return render_template("add.html")
+    return render_template("add_video.html")
 
 
 if __name__ == "__main__":

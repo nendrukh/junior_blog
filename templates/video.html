@@ -1,7 +1,15 @@
 {% extends 'base.html' %}
 
 {% block body %}
-    <h2>{% block title %} {{ video['title'] }} {% endblock title %}</h2>
-    <span class="badge badge-primary">{{ video['channel_name'] }}</span>
-    <p>{{ video['description'] }}</p>
+    <a href="{{ video['url'] }}">
+        <h2>{% block title %} {{ video['title'] }} {% endblock title %}</h2>
+    </a>
+    <p>
+        Автор ролика:
+        <span class="badge badge-primary">{{ video['channel_name'] }}</span>
+    </p>
+
+    <p>
+        {{ video['description'] }}
+    </p>
 {% endblock body %}
