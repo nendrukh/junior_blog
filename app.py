@@ -68,5 +68,25 @@ def add_video():
     return render_template("add_video.html")
 
 
+@app.route("/<int:video_id>/edit_video", methods=("GET", "POST"))
+def edit_video(video_id):
+    video = get_video(video_id)
+
+    if request.method == "POST":
+        description = request.form["description"]
+
+        if not description:
+            flash("Описание не было заполнено.")
+        else:
+            conn = get_db_connection()
+            conn.execute("UPDATE videos SET description = ? WHERE id = ?",
+                         (description, video_id))
+            conn.commit()
+            conn.close()
+            return redirect(url_for("home"))
+
+    return render_template("edit_video.html", video=video)
+
+
 if __name__ == "__main__":
     app.run(debug=True)

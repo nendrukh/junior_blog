@@ -1,0 +1,22 @@
+{% extends 'base.html' %}
+
+{% block body %}
+    <h1>{% block title %} Изменение описания видео {% endblock title %}</h1>
+    <div class="container">
+        <form method="post">
+            <h2>Видео: {{ request.form['title'] or video['title'] }}</h2>
+            <div class="form-group">
+                <label for="description">Новое описание видео</label>
+                <textarea align="center" name="description" placeholder="Новое описание"
+                        class="form-control">{{ request.form['description'] or video['description'] }}</textarea>
+            </div>
+            <div class="form-group">
+                <button type="submit" class="btn btn-primary">Подтвердить</button>
+            </div>
+            </div>
+        </form>
+        {% for message in get_flashed_messages() %}
+            <div class="alert alert-danger">{{ message }}</div>
+        {% endfor %}
+    </div>
+{% endblock body %}
