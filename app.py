@@ -88,5 +88,16 @@ def edit_video(video_id):
     return render_template("edit_video.html", video=video)
 
 
+@app.route("/<int:video_id>/delete_video", methods=("POST",))
+def delete_video(video_id):
+    video = get_video(video_id)
+    conn = get_db_connection()
+    conn.execute("DELETE FROM videos WHERE id = ?", (video_id,))
+    conn.commit()
+    conn.close()
+    flash(f'Видео {video["title"]} было успешно удалено')
+    return redirect(url_for("home"))
+
+
 if __name__ == "__main__":
     app.run(debug=True)
